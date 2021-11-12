@@ -14,7 +14,7 @@ class PlayScene extends Phaser.Scene {
         // skapa en tilemap från JSON filen vi preloadade
         const map = this.make.tilemap({ key: 'map' });
         // ladda in tilesetbilden till vår tilemap
-        const tileset = map.addTilesetImage('jefrens_platformer', 'tiles');
+        const tileset = map.addTilesetImage('jefrens_tilesheet', 'tiles');
 
         // initiera animationer, detta är flyttat till en egen metod
         // för att göra create metoden mindre rörig
@@ -26,8 +26,11 @@ class PlayScene extends Phaser.Scene {
         // Ladda lagret Platforms från tilemappen
         // och skapa dessa
         // sätt collisionen
+        this.platforms = map.createLayer('Middleground', tileset);
+        this.platforms = map.createLayer('Background', tileset);
         this.platforms = map.createLayer('Platforms', tileset);
         this.platforms.setCollisionByExclusion(-1, true);
+        console.log(this.platforms);
         // platforms.setCollisionByProperty({ collides: true });
         // this.platforms.setCollisionFromCollisionGroup(
         //     true,
@@ -42,7 +45,7 @@ class PlayScene extends Phaser.Scene {
         this.player.setCollideWorldBounds(true);
 
         // skapa en fysik-grupp
-        this.spikes = this.physics.add.group({
+       /* this.spikes = this.physics.add.group({
             allowGravity: false,
             immovable: true
         });
@@ -69,7 +72,7 @@ class PlayScene extends Phaser.Scene {
             this.playerHit,
             null,
             this
-        );
+        ); */
 
         // krocka med platforms lagret
         this.physics.add.collider(this.player, this.platforms);

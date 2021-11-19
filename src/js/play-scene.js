@@ -28,6 +28,7 @@ class PlayScene extends Phaser.Scene {
         // sätt collisionen
         this.platforms = map.createLayer('Middleground', tileset);
         this.platforms = map.createLayer('Background', tileset);
+        this.platforms = map.createLayer('Spikes', tileset);
         this.platforms = map.createLayer('Platforms', tileset);
         this.platforms.setCollisionByExclusion(-1, true);
         console.log(this.platforms);
@@ -44,8 +45,12 @@ class PlayScene extends Phaser.Scene {
         this.player.setBounce(0.1);
         this.player.setCollideWorldBounds(true);
 
+        this.foe = this.physics.add.sprite(850, 150, 'foe')
+        this.foe.setBounce(1.00001)
+        this.foe.setCollideWorldBounds(true);
+
         // skapa en fysik-grupp
-       /* this.spikes = this.physics.add.group({
+        this.spikes = this.physics.add.group({
             allowGravity: false,
             immovable: true
         });
@@ -54,7 +59,7 @@ class PlayScene extends Phaser.Scene {
         // kan vi ladda in andra lager
         // i tilemappen finns det ett lager Spikes
         // som innehåller spikarnas position
-        console.log(this.platforms);
+        /* console.log(this.platforms);
         map.getObjectLayer('Spikes').objects.forEach((spike) => {
             // iterera över spikarna, skapa spelobjekt
             const spikeSprite = this.spikes
@@ -70,12 +75,11 @@ class PlayScene extends Phaser.Scene {
             this.player,
             this.spikes,
             this.playerHit,
-            null,
-            this
-        ); */
+        );*/
 
         // krocka med platforms lagret
         this.physics.add.collider(this.player, this.platforms);
+        this.physics.add.collider(this.foe, this.platforms);
 
         // skapa text på spelet, texten är tom
         // textens innehåll sätts med updateText() metoden
